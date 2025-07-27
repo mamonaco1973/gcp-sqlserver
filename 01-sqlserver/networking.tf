@@ -21,38 +21,21 @@ resource "google_compute_subnetwork" "sqlserver_subnet" {
 }
 
 # =================================================================================
-# FIREWALL RULE: ALLOW INBOUND HTTP (PORT 80)
-# - Enables external access to any web-based service (e.g., pgweb UI)
-# - Applies across all VM instances inside the VPC
-# =================================================================================
-resource "google_compute_firewall" "allow_http" {
-  name    = "allow-http"                            # Rule name
-  network = google_compute_network.sqlserver_vpc.id # Attach to VPC
-
-  allow {
-    protocol = "tcp"  # Transmission protocol
-    ports    = ["80"] # Allow HTTP
-  }
-
-  source_ranges = ["0.0.0.0/0"] # Allow from all IPs (consider tightening for production)
-}
-
-# =================================================================================
-# FIREWALL RULE: ALLOW INBOUND SSH (PORT 22)
-# - Enables remote admin access to VMs via SSH
+# FIREWALL RULE: ALLOW INBOUND RDP (PORT 3389)
+# - Enables remote admin access to VMs via RDP
 # - Use source ranges and tags to secure access
 # =================================================================================
-resource "google_compute_firewall" "allow_ssh" {
-  name    = "allow-ssh"                             # Rule name
+resource "google_compute_firewall" "allow_rdp" {
+  name    = "allow-rdp"                             # Rule name
   network = google_compute_network.sqlserver_vpc.id # Attach to VPC
 
   allow {
     protocol = "tcp"  # Transmission protocol
-    ports    = ["22"] # SSH port
+    ports    = ["3389"] # RDP port
   }
 
   source_ranges = ["0.0.0.0/0"] # Open access — restrict to admin IPs for security
-  target_tags   = ["allow-ssh"] # Scope to VMs that require SSH access
+  target_tags   = ["allow-rdp"] # Scope to VMs that require RDP access
 }
 
 # =================================================================================

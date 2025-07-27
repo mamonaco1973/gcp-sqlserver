@@ -36,16 +36,6 @@ resource "google_sql_database_instance" "sqlserver" {
 }
 
 # =================================================================================
-# CLOUD SQL USER: SQL SERVER (uses SQL Authentication only)
-# =================================================================================
-resource "google_sql_user" "sqlserver_user" {
-  name     = "sqladmin"
-  instance = google_sql_database_instance.sqlserver.name
-  host     = "%" # Required for SQL Auth
-  password = random_password.sqlserver.result
-}
-
-# =================================================================================
 # PRIVATE DNS ZONE FOR SQL SERVER
 # =================================================================================
 resource "google_dns_managed_zone" "private_dns" {
