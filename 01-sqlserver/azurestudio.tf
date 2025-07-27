@@ -29,9 +29,9 @@ resource "google_compute_instance" "desktop_vm" {
   # Attach to the defined VPC and subnetwork
   # Enables connectivity to other GCP services and the internet
   network_interface {
-    network    = data.google_compute_network.sqlserver_vpc.id       # Connects to existing VPC (data source must be defined elsewhere)
-    subnetwork = data.google_compute_subnetwork.sqlserver_subnet.id # Ties instance to a specific subnet (CIDR must match deployment logic)
-    access_config {}                                                # Creates and attaches a one-time ephemeral public IP (NAT-enabled) for remote desktop or updates
+    network    = google_compute_network.sqlserver_vpc.id       # Connects to existing VPC (data source must be defined elsewhere)
+    subnetwork = google_compute_subnetwork.sqlserver_subnet.id # Ties instance to a specific subnet (CIDR must match deployment logic)
+    access_config {}                                           # Creates and attaches a one-time ephemeral public IP (NAT-enabled) for remote desktop or updates
   }
 
   ########################################
