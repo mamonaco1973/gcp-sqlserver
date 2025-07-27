@@ -30,7 +30,7 @@ resource "google_compute_firewall" "allow_rdp" {
   network = google_compute_network.sqlserver_vpc.id # Attach to VPC
 
   allow {
-    protocol = "tcp"  # Transmission protocol
+    protocol = "tcp"    # Transmission protocol
     ports    = ["3389"] # RDP port
   }
 
