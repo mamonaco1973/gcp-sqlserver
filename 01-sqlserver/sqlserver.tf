@@ -1,39 +1,39 @@
 # =================================================================================
 # CLOUD SQL INSTANCE: SQL SERVER STANDARD 2019
 # =================================================================================
-resource "google_sql_database_instance" "sqlserver" {
-  name             = "sqlserver-instance"
-  database_version = "SQLSERVER_2019_STANDARD"
-  region           = "us-central1"
-  root_password    = random_password.sqlserver.result
+# resource "google_sql_database_instance" "sqlserver" {
+#   name             = "sqlserver-instance"
+#   database_version = "SQLSERVER_2019_STANDARD"
+#   region           = "us-central1"
+#   root_password    = random_password.sqlserver.result
 
-  settings {
-    tier = "db-custom-2-7680" # Adjust as needed (vCPUs / memory)
+#   settings {
+#     tier = "db-custom-2-7680" # Adjust as needed (vCPUs / memory)
 
-    ip_configuration {
-      ipv4_enabled    = false
-      private_network = google_compute_network.sqlserver_vpc.self_link
-    }
+#     ip_configuration {
+#       ipv4_enabled    = false
+#       private_network = google_compute_network.sqlserver_vpc.self_link
+#     }
 
-    backup_configuration {
-      enabled = true
-    }
+#     backup_configuration {
+#       enabled = true
+#     }
 
-    maintenance_window {
-      day          = 7
-      hour         = 3
-      update_track = "stable"
-    }
+#     maintenance_window {
+#       day          = 7
+#       hour         = 3
+#       update_track = "stable"
+#     }
 
-    # Required for SQL Server licensing
-    activation_policy = "ALWAYS"
-    availability_type = "ZONAL"
-  }
+#     # Required for SQL Server licensing
+#     activation_policy = "ALWAYS"
+#     availability_type = "ZONAL"
+#   }
 
-  deletion_protection = false
+#   deletion_protection = false
 
-  depends_on = [null_resource.wait_for_vpc_peering]
-}
+#   depends_on = [null_resource.wait_for_vpc_peering]
+# }
 
 # =================================================================================
 # PRIVATE DNS ZONE FOR SQL SERVER
