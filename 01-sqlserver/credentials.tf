@@ -67,7 +67,7 @@ resource "google_secret_manager_secret" "vm_secret" {
 # Create a new version of the previously defined secret
 # The secret data is a JSON object containing the hardcoded username and the dynamically generated password
 # This allows systems like Packer to programmatically retrieve and use secure credentials
-resource "google_secret_manager_secret_version" "packer_secret_version" {
+resource "google_secret_manager_secret_version" "vm_secret_version" {
   secret      = google_secret_manager_secret.vm_secret.id  # Reference the parent secret
   secret_data = jsonencode({                               # Encode the credentials as a JSON blob
     username = "sysadmin"                                  # Static username for automation
