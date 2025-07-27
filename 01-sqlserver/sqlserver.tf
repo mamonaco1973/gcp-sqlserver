@@ -5,6 +5,7 @@ resource "google_sql_database_instance" "sqlserver" {
   name             = "sqlserver-instance"
   database_version = "SQLSERVER_2019_STANDARD"
   region           = "us-central1"
+  root_password    = random_password.sqlserver.result
 
   settings {
     tier = "db-custom-2-7680" # Adjust as needed (vCPUs / memory)
