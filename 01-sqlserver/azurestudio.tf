@@ -41,12 +41,12 @@ resource "google_compute_instance" "desktop_vm" {
   # Use metadata to deliver a PowerShell script to the Windows instance at boot time
   # The script is templated with dynamic variables such as the image name
   metadata = {
-    #windows-startup-script-ps1 = templatefile("./scripts/startup_script.ps1", {
-    #  image = data.google_compute_image.desktop_packer_image.name  # Pass image name into startup script for reference/logging
-    #})
-
-    admin-password = random_password.vm_generated.result
-    admin-username = "sysadmin"
+    windows-startup-script-ps1 = templatefile("./scripts/azurestudio.ps1.template", {
+      DBPASSWORD = random_password.vm_generated.result
+      DBENDPOINT = "sqlserver.internal.sqlserver-zone.local"
+      VMPASSWORD = random_password.vm_generated.result
+      VMUSER     = "sysadmin"
+    })
   }
 
   ########################################
