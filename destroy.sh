@@ -17,9 +17,9 @@ fi
 # - Partial destroy first (user + instance), then full cleanup
 # =================================================================================
 
-gcloud sql instances delete mysql-instance --quiet
+#gcloud sql instances delete sqlserver-instance --quiet
 
-cd 01-mysql
+cd 01-sqlserver
 terraform init
 terraform destroy -auto-approve
 cd ..
