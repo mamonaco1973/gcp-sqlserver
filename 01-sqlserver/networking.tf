@@ -26,7 +26,7 @@ resource "google_compute_subnetwork" "sqlserver_subnet" {
 # - Applies across all VM instances inside the VPC
 # =================================================================================
 resource "google_compute_firewall" "allow_http" {
-  name    = "allow-http"                        # Rule name
+  name    = "allow-http"                            # Rule name
   network = google_compute_network.sqlserver_vpc.id # Attach to VPC
 
   allow {
@@ -43,7 +43,7 @@ resource "google_compute_firewall" "allow_http" {
 # - Use source ranges and tags to secure access
 # =================================================================================
 resource "google_compute_firewall" "allow_ssh" {
-  name    = "allow-ssh"                         # Rule name
+  name    = "allow-ssh"                             # Rule name
   network = google_compute_network.sqlserver_vpc.id # Attach to VPC
 
   allow {

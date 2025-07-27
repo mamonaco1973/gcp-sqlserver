@@ -21,8 +21,8 @@ resource "google_compute_instance" "vscode_vm" {
   # =================================================================================
   network_interface {
     network    = google_compute_network.sqlserver_vpc       # Connect to custom VPC
-    subnetwork = google_compute_subnetwork.sqlserver_subnet Attach to defined subnet
-    access_config {}                                       # Enable public IP address
+    subnetwork = google_compute_subnetwork.sqlserver_subnet # Attach to defined subnet
+    access_config {}                                        # Enable public IP address
   }
 
   # =================================================================================
@@ -31,9 +31,9 @@ resource "google_compute_instance" "vscode_vm" {
   # - Replaces variables with actual values (MySQL password and endpoint)
   # ==================================================================
   metadata_startup_script = templatefile("./scripts/vscode.sh.template", {
-    DBPASSWORD   = random_password.sqlserver.result # Use generated SQL Server password
-    DBUSER       = "sqlserver" # Static username for SQL Server
-    DBENDPOINT   = "sqlserver.internal.sqlserver-zone.local"
+    DBPASSWORD = random_password.sqlserver.result # Use generated SQL Server password
+    DBUSER     = "sqlserver"                      # Static username for SQL Server
+    DBENDPOINT = "sqlserver.internal.sqlserver-zone.local"
   })
 
   # =================================================================================
