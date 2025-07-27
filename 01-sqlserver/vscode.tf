@@ -20,8 +20,8 @@ resource "google_compute_instance" "vscode_vm" {
   # - Adds external IP via `access_config {}` for internet access
   # =================================================================================
   network_interface {
-    network    = google_compute_network.vscode_vpc.id       # Connect to custom VPC
-    subnetwork = google_compute_subnetwork.vscode_subnet.id # Attach to defined subnet
+    network    = google_compute_network.sqlserver_vpc       # Connect to custom VPC
+    subnetwork = google_compute_subnetwork.sqlserver_subnet Attach to defined subnet
     access_config {}                                       # Enable public IP address
   }
 
@@ -59,7 +59,7 @@ resource "google_compute_instance" "vscode_vm" {
   # - Forces VM creation to wait for Cloud SQL instance to be ready
   # - Ensures startup script has a valid endpoint to connect to
   # =================================================================================
-  depends_on = [google_sql_database_instance.mysql] # Wait for MySQL instance to be created
+  #depends_on = [google_sql_database_instance.mysql] # Wait for MySQL instance to be created
 }
 
 # =================================================================================
