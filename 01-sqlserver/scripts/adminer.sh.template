@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Update all package lists silently and auto-confirm upgrades
+sudo apt update -y
+sudo apt install apache2 php libapache2-mod-php php-sybase -y
+
+sudo mkdir -p /var/www/html/adminer
+sudo wget https://www.adminer.org/latest.php -O /var/www/html/adminer/index.php
+
+# ---------------------------------------------------------------
+# REPLACE DEFAULT INDEX.HTML WITH REDIRECT TO /adminer
+# ---------------------------------------------------------------
+sudo tee /var/www/html/index.html > /dev/null <<EOF
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="refresh" content="0; url=./adminer" />
+    <script>
+      window.location.href = "./adminer";
+    </script>
+    <title>Redirecting...</title>
+  </head>
+  <body>
+    If you are not redirected automatically, <a href="./adminer">click here</a>.
+  </body>
+</html>
+EOF
+
+systemctl restart apache2
+systemctl enable apache2

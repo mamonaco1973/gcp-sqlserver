@@ -1,6 +1,0 @@
-#!/bin/bash
-
-# Update all package lists silently and auto-confirm upgrades
-sudo apt update -y
-
-

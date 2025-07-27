@@ -1,5 +1,5 @@
-resource "google_compute_instance" "vscode_vm" {
-  name         = "vscode-vm"     # Name of the VM instance
+resource "google_compute_instance" "adminer_vm" {
+  name         = "adminer-vm"    # Name of the VM instance
   machine_type = "e2-small"      # Low-cost instance type suitable for small workloads
   zone         = "us-central1-a" # Geographic zone for deployment (must match subnet region)
 
@@ -30,7 +30,7 @@ resource "google_compute_instance" "vscode_vm" {
   # - Loads external script template (e.g., ./scripts/phpmyadmin.sh.template)
   # - Replaces variables with actual values (MySQL password and endpoint)
   # ==================================================================
-  metadata_startup_script = templatefile("./scripts/vscode.sh.template", {
+  metadata_startup_script = templatefile("./scripts/adminer.sh.template", {
     DBPASSWORD = random_password.sqlserver.result # Use generated SQL Server password
     DBUSER     = "sqlserver"                      # Static username for SQL Server
     DBENDPOINT = "sqlserver.internal.sqlserver-zone.local"
