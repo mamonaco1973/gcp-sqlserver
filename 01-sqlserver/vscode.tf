@@ -20,9 +20,9 @@ resource "google_compute_instance" "vscode_vm" {
   # - Adds external IP via `access_config {}` for internet access
   # =================================================================================
   network_interface {
-    network    = google_compute_network.sqlserver_vpc       # Connect to custom VPC
-    subnetwork = google_compute_subnetwork.sqlserver_subnet # Attach to defined subnet
-    access_config {}                                        # Enable public IP address
+    network    = google_compute_network.sqlserver_vpc.id       # Connect to custom VPC
+    subnetwork = google_compute_subnetwork.sqlserver_subnet.id # Attach to defined subnet
+    access_config {}                                           # Enable public IP address
   }
 
   # =================================================================================
