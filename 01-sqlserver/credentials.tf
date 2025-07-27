@@ -31,8 +31,8 @@ resource "google_secret_manager_secret" "sqlserver_secret" {
 # =================================================================================
 resource "google_secret_manager_secret_version" "sqlserver_secret_version" {
   secret = google_secret_manager_secret.sqlserver_secret.id # Target the parent secret
-  secret_data = jsonencode({                            # Encode structured credentials
-    username = "sysadmin"                               # Static username
+  secret_data = jsonencode({                                # Encode structured credentials
+    username = "sysadmin"                                   # Static username
     password = random_password.sqlserver.result             # Dynamic password (from above)
   })
 }
