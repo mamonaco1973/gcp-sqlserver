@@ -3,65 +3,68 @@
 -- ==================================================
 -- SET TARGET DATABASE
 USE pagila;
+GO
 
 -- --------------------------------------------------
 -- ADDING FOREIGN KEY CONSTRAINT
 ALTER TABLE city
 ADD CONSTRAINT fk_city_country FOREIGN KEY (country_id) REFERENCES country(country_id);
-
+GO
 
 -- --------------------------------------------------
 -- ADDING FOREIGN KEY CONSTRAINT
 ALTER TABLE address
 ADD CONSTRAINT fk_address_city FOREIGN KEY (city_id) REFERENCES city(city_id);
+GO
+
 
 -- --------------------------------------------------
 -- ADDING FOREIGN KEY CONSTRAINT
 ALTER TABLE store
 ADD CONSTRAINT fk_store_staff FOREIGN KEY (manager_staff_id) REFERENCES staff(staff_id);
-
+GO
 
 -- --------------------------------------------------
 -- ADDING FOREIGN KEY CONSTRAINT
 ALTER TABLE rental
 ADD CONSTRAINT fk_rental_staff FOREIGN KEY (staff_id) REFERENCES staff(staff_id);
-
+GO
 
 -- --------------------------------------------------
 -- ADDING FOREIGN KEY CONSTRAINT
 ALTER TABLE payment
 ADD CONSTRAINT fk_payment_staff FOREIGN KEY (staff_id) REFERENCES staff(staff_id);
-
+GO
 -- Index on customer last name
 
 -- --------------------------------------------------
 -- INDEX CREATION FOR PERFORMANCE
 CREATE INDEX idx_customer_last_name ON customer(last_name);
-
+GO
 -- Index on film title
 
 -- --------------------------------------------------
 -- INDEX CREATION FOR PERFORMANCE
 CREATE INDEX idx_film_title ON film(title);
-
+GO
 -- Index on inventory (film_id, store_id)
 
 -- --------------------------------------------------
 -- INDEX CREATION FOR PERFORMANCE
 CREATE INDEX idx_inventory_film_store ON inventory(film_id, store_id);
-
+GO
 -- Index on rental (customer_id)
 
 -- --------------------------------------------------
 -- INDEX CREATION FOR PERFORMANCE
 CREATE INDEX idx_rental_customer_id ON rental(customer_id);
-
+GO
 -- Index on payment (customer_id)
 
 -- --------------------------------------------------
 -- INDEX CREATION FOR PERFORMANCE
 CREATE INDEX idx_payment_customer_id ON payment(customer_id);
-
+GO
 ----
 
 
@@ -69,7 +72,7 @@ CREATE INDEX idx_payment_customer_id ON payment(customer_id);
 -- DROP IF EXISTS BLOCK (SAFE RESET BEFORE CREATE)
 IF OBJECT_ID('staff_list', 'V') IS NOT NULL 
     DROP VIEW staff_list;
-
+GO
 
 -- ==================================================
 -- CREATE VIEW STAFF_LIST AS (VIEW)
@@ -91,12 +94,14 @@ JOIN address a ON s.address_id = a.address_id
 JOIN city c ON a.city_id = c.city_id
 JOIN country co ON c.country_id = co.country_id;
 
+GO
 
 -- --------------------------------------------------
 -- DROP IF EXISTS BLOCK (SAFE RESET BEFORE CREATE)
 IF OBJECT_ID('customer_list', 'V') IS NOT NULL 
     DROP VIEW customer_list;
 
+GO
 
 -- ==================================================
 -- CREATE VIEW CUSTOMER_LIST AS (VIEW)
@@ -118,12 +123,14 @@ JOIN address a ON cu.address_id = a.address_id
 JOIN city c ON a.city_id = c.city_id
 JOIN country co ON c.country_id = co.country_id;
 
+GO
 
 -- --------------------------------------------------
 -- DROP IF EXISTS BLOCK (SAFE RESET BEFORE CREATE)
 IF OBJECT_ID('film_list', 'V') IS NOT NULL 
     DROP VIEW film_list;
 
+GO
 
 -- ==================================================
 -- CREATE VIEW FILM_LIST AS (VIEW)
@@ -141,12 +148,14 @@ FROM film f
 LEFT JOIN film_category fc ON f.film_id = fc.film_id
 LEFT JOIN category c ON fc.category_id = c.category_id;
 
+GO
 
 -- --------------------------------------------------
 -- DROP IF EXISTS BLOCK (SAFE RESET BEFORE CREATE)
 IF OBJECT_ID('nicer_but_slower_film_list', 'V') IS NOT NULL 
     DROP VIEW nicer_but_slower_film_list;
 
+GO
 
 -- ==================================================
 -- CREATE VIEW NICER_BUT_SLOWER_FILM_LIST AS (VIEW)
@@ -166,12 +175,14 @@ LEFT JOIN film_category fc ON f.film_id = fc.film_id
 LEFT JOIN category c ON fc.category_id = c.category_id
 JOIN language l ON f.language_id = l.language_id;
 
+GO
 
 -- --------------------------------------------------
 -- DROP IF EXISTS BLOCK (SAFE RESET BEFORE CREATE)
 IF OBJECT_ID('sales_by_store', 'V') IS NOT NULL 
     DROP VIEW sales_by_store;
 
+GO
 
 -- ==================================================
 -- CREATE VIEW SALES_BY_STORE AS (VIEW)
@@ -190,12 +201,14 @@ JOIN city ci ON a.city_id = ci.city_id
 JOIN country co ON ci.country_id = co.country_id
 GROUP BY co.country, ci.city, s.store_id;
 
+GO
 
 -- --------------------------------------------------
 -- DROP IF EXISTS BLOCK (SAFE RESET BEFORE CREATE)
 IF OBJECT_ID('sales_by_film_category', 'V') IS NOT NULL 
     DROP VIEW sales_by_film_category;
 
+GO
 
 -- ==================================================
 -- CREATE VIEW SALES_BY_FILM_CATEGORY AS (VIEW)
@@ -211,13 +224,14 @@ JOIN film_category fc ON f.film_id = fc.film_id
 JOIN category c ON fc.category_id = c.category_id
 GROUP BY c.name;
 
+GO
 
 -- --------------------------------------------------
 -- DROP IF EXISTS BLOCK (SAFE RESET BEFORE CREATE)
 IF OBJECT_ID('actor_info', 'V') IS NOT NULL 
     DROP VIEW actor_info;
 
-
+GO
 -- ==================================================
 -- CREATE VIEW ACTOR_INFO AS (VIEW)
 CREATE VIEW actor_info AS
@@ -231,12 +245,14 @@ JOIN film_actor fa ON a.actor_id = fa.actor_id
 JOIN film f ON fa.film_id = f.film_id
 GROUP BY a.actor_id, a.first_name, a.last_name;
 
+GO
 
 -- --------------------------------------------------
 -- DROP IF EXISTS BLOCK (SAFE RESET BEFORE CREATE)
 IF OBJECT_ID('customer_summary', 'V') IS NOT NULL 
     DROP VIEW customer_summary;
 
+GO
 
 -- ==================================================
 -- CREATE VIEW CUSTOMER_SUMMARY AS (VIEW)
@@ -253,12 +269,14 @@ LEFT JOIN rental r ON cu.customer_id = r.customer_id
 LEFT JOIN payment p ON cu.customer_id = p.customer_id
 GROUP BY cu.customer_id, cu.first_name, cu.last_name;
 
+GO
 
 -- --------------------------------------------------
 -- DROP IF EXISTS BLOCK (SAFE RESET BEFORE CREATE)
 IF OBJECT_ID('film_stats', 'V') IS NOT NULL 
     DROP VIEW film_stats;
 
+GO
 
 -- ==================================================
 -- CREATE VIEW FILM_STATS AS (VIEW)
@@ -272,12 +290,14 @@ LEFT JOIN inventory i ON f.film_id = i.film_id
 LEFT JOIN rental r ON i.inventory_id = r.inventory_id
 GROUP BY f.film_id, f.title;
 
+GO
 
 -- --------------------------------------------------
 -- DROP IF EXISTS BLOCK (SAFE RESET BEFORE CREATE)
 IF OBJECT_ID('inventory_in_stock', 'FN') IS NOT NULL 
     DROP FUNCTION inventory_in_stock;
 
+GO
 
 -- ==================================================
 -- USER-DEFINED FUNCTION CREATION
@@ -306,12 +326,14 @@ BEGIN
 END
 ');
 
+GO
 
 -- --------------------------------------------------
 -- DROP IF EXISTS BLOCK (SAFE RESET BEFORE CREATE)
 IF OBJECT_ID('last_day', 'FN') IS NOT NULL 
     DROP FUNCTION last_day;
 
+GO
 
 -- ==================================================
 -- USER-DEFINED FUNCTION CREATION
@@ -329,12 +351,14 @@ BEGIN
 END
 ');
 
+GO
 
 -- --------------------------------------------------
 -- DROP IF EXISTS BLOCK (SAFE RESET BEFORE CREATE)
 IF OBJECT_ID('rewards_report', 'V') IS NOT NULL 
     DROP VIEW rewards_report;
 
+GO
 
 -- ==================================================
 -- CREATE VIEW REWARDS_REPORT AS (VIEW)
@@ -361,3 +385,4 @@ GROUP BY
     city.city, country.country
 HAVING SUM(p.amount) > 100;
 
+GO
