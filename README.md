@@ -4,7 +4,9 @@ This project demonstrates how to deploy a secure, private SQL Server instance on
 
 The deployment includes a Cloud SQL for SQL Server instance with public access disabled, integrated into a custom Virtual Private Cloud (VPC) and secured using private IP networking. Additionally, the project provisions a lightweight Ubuntu virtual machine that runs [Adminer](https://www.adminer.org/), a browser-based SQL client, allowing private, browser-accessible interaction with the database.
 
-As part of the configuration, we optionally deploy a sample database to showcase real-world querying and administration in a private cloud context. The solution is ideal for developers and teams looking to build secure, internal-facing applications without exposing the database to the public internet.
+As part of the configuration, we've ported and deployed a SQL server version of the well known [Pagila Database](https://github.com/devrimgunduz/pagila). Pagila is a sample database modeled after the Sakila DVD rental database, commonly used for learning and testing relational database features
+
+The solution is ideal for developers and teams looking to build secure, internal-facing applications without exposing the database to the public internet.
 
 ![diagram](gcp-sqlserver.png)
 
