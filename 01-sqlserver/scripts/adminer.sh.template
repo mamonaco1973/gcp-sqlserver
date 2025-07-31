@@ -51,6 +51,10 @@ export DBENDPOINT="${DBENDPOINT}"
 #   -i : Input SQL script file.
 # Output from each run is redirected to a separate log file under /tmp for troubleshooting.
 
+cd /tmp
+git clone https://github.com/mamonaco1973/gcp-sqlserver.git
+cd gcp-sqlserver/01-sqlserver/data
+
 sqlcmd -S "$DBENDPOINT" -U "$DBUSER" -P "$DBPASSWORD" -i "1.pagila-create-db.sql" > /tmp/1.pagila-create-db.sql.log
 sqlcmd -S "$DBENDPOINT" -U "$DBUSER" -P "$DBPASSWORD" -i "2.pagila-data.sql"        > /tmp/2.pagila-data.sql.log
 sqlcmd -S "$DBENDPOINT" -U "$DBUSER" -P "$DBPASSWORD" -i "3.pagila-views.sql"       > /tmp/3.pagila-views.sql.log
