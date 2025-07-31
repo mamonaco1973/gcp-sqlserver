@@ -11,7 +11,7 @@ resource "google_compute_network" "sqlserver_vpc" {
 # =================================================================================
 # CREATE CUSTOM SUBNET
 # - Defines a specific IP CIDR block inside the custom VPC
-# - Hosts all compute and managed services (e.g., Postgres, pgweb)
+# - Hosts all compute and managed services (e.g., SQL Server, adminer)
 # =================================================================================
 resource "google_compute_subnetwork" "sqlserver_subnet" {
   name          = "sqlserver-subnet"                      # Subnet name
@@ -22,7 +22,7 @@ resource "google_compute_subnetwork" "sqlserver_subnet" {
 
 # =================================================================================
 # FIREWALL RULE: ALLOW INBOUND HTTP (PORT 80)
-# - Enables external access to any web-based service (e.g., pgweb UI)
+# - Enables external access to any web-based service (e.g., adminer UI)
 # - Applies across all VM instances inside the VPC
 # =================================================================================
 resource "google_compute_firewall" "allow_http" {
@@ -57,7 +57,7 @@ resource "google_compute_firewall" "allow_ssh" {
 
 # =================================================================================
 # GLOBAL INTERNAL IP ALLOCATION FOR PRIVATE SERVICE ACCESS
-# - Creates an internal IP range used for service networking (e.g., mySQL)
+# - Creates an internal IP range used for service networking (e.g., SQL Server)
 # - Required for private services like Cloud SQL via Private Service Connect or VPC peering
 # =================================================================================
 resource "google_compute_global_address" "private_ip_alloc" {

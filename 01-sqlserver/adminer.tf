@@ -28,7 +28,7 @@ resource "google_compute_instance" "adminer_vm" {
   # =================================================================================
   # STARTUP SCRIPT INJECTION
   # - Loads external script template (e.g., ./scripts/phpmyadmin.sh.template)
-  # - Replaces variables with actual values (MySQL password and endpoint)
+  # - Replaces variables with actual values (SQL Server password and endpoint)
   # ==================================================================
   metadata_startup_script = templatefile("./scripts/adminer.sh.template", {
     DBPASSWORD = random_password.sqlserver.result # Use generated SQL Server password
