@@ -10,7 +10,7 @@ ADMINER_IP=$(gcloud compute instances describe adminer-vm \
 
 echo "NOTE: Adminer running at http://$ADMINER_IP"
 
-# Wait until the phpMyAdmin URL is reachable (HTTP 200 or similar)
+# Wait until the Adminer URL is reachable (HTTP 200 or similar)
 echo "NOTE: Waiting for Adminer to become available at http://$ADMINER_IP ..."
 
 # Max attempts (optional)

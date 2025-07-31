@@ -36,3 +36,7 @@ echo "deb [arch=amd64] https://packages.microsoft.com/ubuntu/22.04/prod jammy ma
 sudo apt-get update
 sudo ACCEPT_EULA=Y apt-get install -y mssql-tools unixodbc-dev
 export PATH="$PATH:/opt/mssql-tools/bin"
+
+export DBUSER="sqlserver"
+export DBPASSWORD="vEVTD98WtwCiB9ppuyHG5RKs"
+export DBENDPOINT="sqlserver.internal.sqlserver-zone.local"
