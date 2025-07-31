@@ -1,18 +1,18 @@
-# Deploying MySQL on Google Cloud Platform (GCP)
+# Deploying SQL Server on Google Cloud Platform (GCP)
 
-This project demonstrates how to deploy a secure, private MySQL instance on Google Cloud using Terraform.
+This project demonstrates how to deploy a secure, private SQL Server instance on Google Cloud using Terraform.
 
-The deployment includes a Cloud SQL for MySQL instance with public access disabled, integrated into a custom Virtual Private Cloud (VPC) and secured using private IP networking. Additionally, the project provisions a lightweight Ubuntu virtual machine that runs [phpMyAdmin](https://www.phpmyadmin.net/), a browser-based MySQL client, allowing private, browser-accessible interaction with the database.
+The deployment includes a Cloud SQL for SQL Server instance with public access disabled, integrated into a custom Virtual Private Cloud (VPC) and secured using private IP networking. Additionally, the project provisions a lightweight Ubuntu virtual machine that runs [Adminer](https://www.adminer.org/), a browser-based SQL client, allowing private, browser-accessible interaction with the database.
 
-As part of the configuration, we deploy the [Sakila](https://dev.mysql.com/doc/sakila/en/) sample dataset—a fictional DVD rental database—to showcase real-world querying and administration in a private cloud context. The solution is ideal for developers and teams looking to build secure, internal-facing applications without exposing the database to the public internet.
+As part of the configuration, we optionally deploy a sample database to showcase real-world querying and administration in a private cloud context. The solution is ideal for developers and teams looking to build secure, internal-facing applications without exposing the database to the public internet.
 
-![diagram](gcp-mysql.png)
+![diagram](gcp-sqlserver.png)
 
 ## What You'll Learn
 
-- How to deploy a fully private MySQL Cloud SQL instance on GCP using Terraform
+- How to deploy a fully private SQL Server Cloud SQL instance on GCP using Terraform
 - How to configure a custom VPC, subnet, and private IP for secure, internal connectivity
-- How to provision a VM running `phpMyAdmin` for private browser-based database access
+- How to provision a VM running `Adminer` for private browser-based database access
 - Best practices for securing GCP-managed databases with private networking and infrastructure-as-code
 
 ## Prerequisites
@@ -26,8 +26,8 @@ If this is your first time watching our content, we recommend starting with this
 ## Download this Repository
 
 ```bash
-git clone https://github.com/mamonaco1973/gcp-mysql.git
-cd gcp-mysql
+git clone https://github.com/mamonaco1973/gcp-sqlserver.git
+cd gcp-sqlserver
 ```
 
 ## Build the Code
@@ -35,27 +35,17 @@ cd gcp-mysql
 Run [check_env.sh](check_env.sh) then run [apply.sh](apply.sh).
 
 ```bash
-~/gcp-mysql$ ./apply.sh
+~/gcp-sqlserver$ ./apply.sh
 NOTE: Validating that required commands are found in the PATH.
 NOTE: gcloud is found in the current PATH.
 NOTE: packer is found in the current PATH.
 NOTE: terraform is found in the current PATH.
 NOTE: jq is found in the current PATH.
 NOTE: All required commands are available.
-NOTE: Validating credentials.json and test the gcloud command
+NOTE: Validating credentials.json and testing the gcloud command
 Activated service account credentials for: [terraform-build@debug-project-446221.iam.gserviceaccount.com]
 Initializing the backend...
 Initializing provider plugins...
-- Reusing previous version of hashicorp/random from the dependency lock file
-- Reusing previous version of hashicorp/google from the dependency lock file
-- Reusing previous version of hashicorp/google-beta from the dependency lock file
-- Reusing previous version of hashicorp/null from the dependency lock file
-- Using previously-installed hashicorp/google v5.45.2
-- Using previously-installed hashicorp/google-beta v4.85.0
-- Using previously-installed hashicorp/null v3.2.4
-- Using previously-installed hashicorp/random v3.7.2
-
-Terraform has been successfully initialized!
 [...]
 ```
 
@@ -64,105 +54,79 @@ Terraform has been successfully initialized!
 After applying the Terraform scripts, the following GCP resources will be created:
 
 ### VPC & Subnet
-- VPC: `mysql-vpc`
+- VPC: `sqlserver-vpc`
   - CIDR range: `10.0.0.0/23`
-- Subnet: `mysql-subnet`
+- Subnet: `sqlserver-subnet`
   - Region-based subnet (e.g., `us-central1`)
   - CIDR: `10.0.0.0/25`
 - Firewall Rules:
   - Allow internal traffic
-  - Allow HTTP and SSH access to the `phpmyadmin-vm`
+  - Allow HTTP and SSH access to the `adminer-vm`
 
 ### Private Networking
 - Private Service Connection:
   - Enables private IP for Cloud SQL
   - Ensures all communication stays within the VPC
 
-### Cloud SQL for MySQL
-- Database Version: MySQL 8.0
-- Instance: `mysql-instance`
+### Cloud SQL for SQL Server
+- Database Version: SQL Server 2019 (latest supported version)
+- Instance: `sqlserver-instance`
   - Private IP only (no public access)
-  - Preloaded with [Sakila sample database](https://dev.mysql.com/doc/sakila/en/)
   - Credentials stored securely in Google Secret Manager
 
-### Virtual Machine (phpMyAdmin)
-- VM Name: `phpmyadmin-vm`
+### Virtual Machine (Adminer)
+- VM Name: `adminer-vm`
   - Ubuntu-based instance
   - Deployed in the same subnet
-  - Uses startup script to install and run `phpMyAdmin`
-  - Connects privately to MySQL via internal IP
+  - Uses startup script to install and run `Adminer`
+  - Connects privately to SQL Server via internal IP
 
-## phpMyAdmin Demo
+## Adminer Demo
 
-[phpMyAdmin](https://www.phpmyadmin.net/) is a simple web-based and cross-platform MySQL database explorer.
+[Adminer](https://www.adminer.org/) is a simple web-based and cross-platform SQL client.
 
-![phpmyadmin](phpmyadmin.png)
+![diagram](adminer.png)
 
 Query 1:
 ```sql
-SELECT
-    -- Select the film title from the 'film' table and label the column 'film_title'
-    f.title AS film_title,
-
-    -- Concatenate the actor's first and last name with a space between them and label the column 'actor_name'
-    CONCAT(a.first_name, ' ', a.last_name) AS actor_name
-
+SELECT TOP 100                       -- Limit the number of rows returned to 100
+    f.title AS film_title,           -- Select the 'title' column from the 'film' table and rename it to 'film_title'
+    a.first_name + ' ' + a.last_name AS actor_name 
+                                     -- Concatenate 'first_name' and 'last_name' from the 'actor' table with a space
+                                     -- Alias the concatenated result as 'actor_name' for readability
 FROM
-    -- Use the 'film' table as the main source of data (alias 'f')
-    sakila.film f
-
-    -- Join the 'film_actor' link table to associate films with their actors by film_id
-    JOIN sakila.film_actor fa
-        ON f.film_id = fa.film_id
-
-    -- Join the 'actor' table to get actor name details by actor_id
-    JOIN sakila.actor a
-        ON fa.actor_id = a.actor_id
-
--- Sort the results first by film title alphabetically, then by actor name alphabetically within each film
-ORDER BY
-    f.title,
-    actor_name
-
--- Return only the first 20 rows of the result set
-LIMIT 20;                                                   
+    film f                           -- Use the 'film' table as the primary dataset and alias it as 'f'
+JOIN
+    film_actor fa                    -- Join the linking table 'film_actor' that associates films with actors
+    ON f.film_id = fa.film_id        -- Match rows where the film's unique ID equals the film_actor's film ID
+JOIN
+    actor a                          -- Join the 'actor' table to retrieve actor details
+    ON fa.actor_id = a.actor_id      -- Match rows where the actor's unique ID equals the film_actor's actor ID
+ORDER BY 
+    f.title,                         -- Sort results by the film title in ascending alphabetical order
+    actor_name;                      -- Within each film, sort the actor names alphabetically
 ```
 
 Query 2:
 
 ```sql
-SELECT
-    -- Select the film title from the 'film' table
-    f.title,
-
-    -- Concatenate all actor full names (first + last name) into a single string
-    -- GROUP_CONCAT builds this list, ordering by actor last name, separating each with a comma and space
-    GROUP_CONCAT(
-        CONCAT(a.first_name, ' ', a.last_name)
-        ORDER BY a.last_name
-        SEPARATOR ', '
-    ) AS actor_names
-
+SELECT TOP 100                               -- Limit the output to the first 100 rows returned
+    f.title,                                 -- Select the 'title' column from the 'film' table
+    STRING_AGG(a.first_name + ' ' + a.last_name, ', ') AS actor_names
+                                             -- Use STRING_AGG to concatenate all actor names for each film
+                                             -- Combine 'first_name' and 'last_name' separated by a space
+                                             -- Separate multiple actor names in the aggregated string with a comma and a space
+                                             -- Alias the resulting concatenated list as 'actor_names'
 FROM
-    -- Use the 'film' table as the starting point (aliased as 'f')
-    sakila.film f
-
-    -- Join 'film_actor' to link films to their actors via film_id
-    JOIN sakila.film_actor fa
-        ON f.film_id = fa.film_id
-
-    -- Join 'actor' to get the actual actor names via actor_id
-    JOIN sakila.actor a
-        ON fa.actor_id = a.actor_id
-
--- Group results by film title so each row represents a unique film
+    film f                                   -- Use the 'film' table as the main dataset and alias it as 'f'
+JOIN
+    film_actor fa                            -- Join the linking table 'film_actor' to connect films and actors
+    ON f.film_id = fa.film_id                -- Match rows where film IDs from both tables are equal
+JOIN
+    actor a                                  -- Join the 'actor' table to get actor details
+    ON fa.actor_id = a.actor_id              -- Match rows where actor IDs from both tables are equal
 GROUP BY
-    f.title
-
--- Sort the output rows alphabetically by film title
+    f.title                                  -- Group the results by each film title so all associated actors are aggregated together
 ORDER BY
-    f.title
-
--- Only return the first 10 rows (the top 10 film titles alphabetically)
-LIMIT 10;
+    f.title;                                 -- Sort the output alphabetically by film title
 ```
