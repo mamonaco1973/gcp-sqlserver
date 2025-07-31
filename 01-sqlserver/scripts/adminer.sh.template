@@ -16,14 +16,14 @@ curl https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trust
 
 # Add Microsoft's Ubuntu package repository for SQL Server tools to the system's sources list.
 # This makes 'mssql-tools' available for installation via apt.
-echo "deb [arch=amd64] https://packages.microsoft.com/ubuntu/24.04/prod noble main" | sudo tee /etc/apt/sources.list.d/mssql-release.list
+echo "deb [arch=amd64] https://packages.microsoft.com/ubuntu/22.04/prod jammy main" | sudo tee /etc/apt/sources.list.d/mssql-release.list
 
 # Update the list of available packages to include the newly added Microsoft repository.
 sudo apt-get update -y
 
 # Install 'mssql-tools' (contains sqlcmd, bcp) and 'unixodbc-dev' (ODBC driver dependencies).
 # 'ACCEPT_EULA=Y' automatically accepts Microsoft's license terms to avoid interactive prompts.
-sudo ACCEPT_EULA=Y apt-get install -y mssql-tools unixodbc-dev
+sudo ACCEPT_EULA=Y apt-get install -y mssql-tools unixodbc-dev > /tmp/mssql-tools.log
 
 # Extend PATH to include the directory where sqlcmd and bcp are installed.
 # This allows these commands to be run from any location in the shell session.
