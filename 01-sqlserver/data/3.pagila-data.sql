@@ -1,6 +1,8 @@
 use pagila;
+GO
 
 SET IDENTITY_INSERT actor ON;
+GO
 
 -- Insert data
 INSERT INTO actor (actor_id, first_name, last_name, last_update) VALUES
@@ -206,10 +208,12 @@ INSERT INTO actor (actor_id, first_name, last_name, last_update) VALUES
 (200, 'THORA', 'TEMPLE', '2022-02-15 09:34:33');
 
 SET IDENTITY_INSERT actor OFF;
+GO
 
  -- Enable IDENTITY_INSERT
 
 SET IDENTITY_INSERT country ON;
+GO
 
 -- Insert data
 INSERT INTO country (country_id, country, last_update) VALUES
@@ -325,9 +329,11 @@ INSERT INTO country (country_id, country, last_update) VALUES
 
 -- Disable IDENTITY_INSERT
 SET IDENTITY_INSERT country OFF;
+GO
 
 -- Enable IDENTITY_INSERT
 SET IDENTITY_INSERT city ON;
+GO
 
 -- Insert data
 INSERT INTO city (city_id, city, country_id, last_update) VALUES
@@ -934,8 +940,10 @@ INSERT INTO city (city_id, city, country_id, last_update) VALUES
 
 -- Disable IDENTITY_INSERT
 SET IDENTITY_INSERT city OFF;
+GO
 
 SET IDENTITY_INSERT address ON;
+GO
 INSERT INTO address (address_id, address, address2, district, city_id, postal_code, phone, last_update) VALUES
 (1, N'47 MySakila Drive', N'', N'Alberta', 300, N'', N'', '2022-02-15 09:45:30'),
 (2, N'28 MySQL Boulevard', N'', N'QLD', 576, N'', N'', '2022-02-15 09:45:30'),
@@ -1541,8 +1549,10 @@ INSERT INTO address (address_id, address, address2, district, city_id, postal_co
 (604, N'1331 Usak Boulevard', N'', N'Vaud', 296, N'61960', N'145308717464', '2022-02-15 09:45:30'),
 (605, N'1325 Fukuyama Street', N'', N'Heilongjiang', 537, N'27107', N'288241215394', '2022-02-15 09:45:30');
 SET IDENTITY_INSERT address OFF;
+GO
 
 SET IDENTITY_INSERT category ON;
+GO
 INSERT INTO category (category_id, name, last_update) VALUES
 (1, N'Action', '2022-02-15 09:46:27'),
 (2, N'Animation', '2022-02-15 09:46:27'),
@@ -1561,8 +1571,10 @@ INSERT INTO category (category_id, name, last_update) VALUES
 (15, N'Sports', '2022-02-15 09:46:27'),
 (16, N'Travel', '2022-02-15 09:46:27');
 SET IDENTITY_INSERT category OFF;
+GO
 
 SET IDENTITY_INSERT store ON;
+GO
 
 INSERT INTO store (store_id, manager_staff_id, address_id, last_update) VALUES
 (0, 0, 73, '2022-02-15 09:57:12'),
@@ -2067,8 +2079,10 @@ INSERT INTO store (store_id, manager_staff_id, address_id, last_update) VALUES
 (499, 499, 2, '2022-02-15 09:57:12');
 
 SET IDENTITY_INSERT store OFF;
+GO
 
 SET IDENTITY_INSERT customer ON;
+GO
 INSERT INTO customer (customer_id, store_id, first_name, last_name, email, address_id, create_date, last_update, active) VALUES
 (1, 1, N'MARY', N'SMITH', N'MARY.SMITH@sakilacustomer.org', 5, '2022-02-14', '2022-02-15 09:57:20', 1),
 (2, 1, N'PATRICIA', N'JOHNSON', N'PATRICIA.JOHNSON@sakilacustomer.org', 6, '2022-02-14', '2022-02-15 09:57:20', 1),
@@ -2670,10 +2684,13 @@ INSERT INTO customer (customer_id, store_id, first_name, last_name, email, addre
 (598, 1, N'WADE', N'DELVALLE', N'WADE.DELVALLE@sakilacustomer.org', 604, '2022-02-14', '2022-02-15 09:57:20', 1),
 (599, 2, N'AUSTIN', N'CINTRON', N'AUSTIN.CINTRON@sakilacustomer.org', 605, '2022-02-14', '2022-02-15 09:57:20', 1);
 SET IDENTITY_INSERT customer OFF;
+GO
 
 use pagila;
+GO
 
 SET IDENTITY_INSERT language ON;
+GO
 
 INSERT INTO language (language_id, name, last_update) VALUES
 (1, N'English', '2022-02-15 10:02:19'),
@@ -2684,10 +2701,12 @@ INSERT INTO language (language_id, name, last_update) VALUES
 (6, N'German', '2022-02-15 10:02:19');
 
 SET IDENTITY_INSERT language OFF;
+GO
 
 ALTER TABLE film ADD original_language_id INT NULL;
 
 SET IDENTITY_INSERT film ON;
+GO
 INSERT INTO film (
 film_id,
 title,
@@ -3705,6 +3724,7 @@ fulltext
 (999, N'ZOOLANDER FICTION', N'A Fateful Reflection of a Waitress And a Boat who must Discover a Sumo Wrestler in Ancient China', 2010, 5, NULL, 5, 2.99, 101, 28.99, N'R', '2022-09-10 16:46:03.905795', N'{Trailers,"Deleted Scenes"}', N'''ancient'':19 ''boat'':11 ''china'':20 ''discov'':14 ''fate'':4 ''fiction'':2 ''must'':13 ''reflect'':5 ''sumo'':16 ''waitress'':8 ''wrestler'':17 ''zooland'':1'),
 (1000, N'ZORRO ARK', N'A Intrepid Panorama of a Mad Scientist And a Boy who must Redeem a Boy in A Monastery', 2019, 4, NULL, 3, 4.99, 50, 18.99, N'NC-17', '2022-09-10 16:46:03.905795', N'{Trailers,Commentaries,"Behind the Scenes"}', N'''ark'':2 ''boy'':12,17 ''intrepid'':4 ''mad'':8 ''monasteri'':20 ''must'':14 ''panorama'':5 ''redeem'':15 ''scientist'':9 ''zorro'':1');
 SET IDENTITY_INSERT film OFF;
+GO
 
 INSERT INTO film_actor (actor_id, film_id, last_update) VALUES
 (1, 1, N'2022-02-15 10:05:03'),
@@ -11547,6 +11567,7 @@ INSERT INTO film_category (film_id, category_id, last_update) VALUES
 (556, 3, '2022-02-15 10:07:09');
 
 SET IDENTITY_INSERT inventory ON;
+GO
 INSERT INTO inventory (inventory_id, film_id, store_id, last_update) VALUES
 (1, 1, 1, '2022-02-15 10:09:17'),
 (2, 1, 1, '2022-02-15 10:09:17'),
@@ -16134,8 +16155,13 @@ INSERT INTO inventory (inventory_id, film_id, store_id, last_update) VALUES
 (4580, 1000, 2, '2022-02-15 10:09:17'),
 (4581, 1000, 2, '2022-02-15 10:09:17');
 SET IDENTITY_INSERT inventory OFF;
+GO
+
+ALTER TABLE staff
+ALTER COLUMN picture VARBINARY(MAX) NULL;
 
 SET IDENTITY_INSERT staff ON;
+GO
 INSERT INTO staff (staff_id, first_name, last_name, address_id, email, store_id, active, username, password, last_update, picture) VALUES
 (0, N'Tisha', N'DuBuque', 28, N'schneider9987@rosenbaumreichert.com', 23, 1, N'sina.corkery', N'8cb2237d0679ca88db6464eac60da96345513964', '2022-05-16 15:13:11.79328', NULL),
 (1, N'Warner', N'Hudson', 45, N'hartmann1448@ratkehaley.com', 25, 1, N'fay.kub', N'8cb2237d0679ca88db6464eac60da96345513964', '2022-05-16 15:13:11.79328', NULL),
@@ -17138,7 +17164,9 @@ INSERT INTO staff (staff_id, first_name, last_name, address_id, email, store_id,
 (998, N'Rosario', N'Keebler', 430, N'hane1171@murphycassinandkerluke.com', 334, 1, N'jospeh.stokes', N'8cb2237d0679ca88db6464eac60da96345513964', '2022-05-16 15:13:11.79328', NULL),
 (999, N'Stefan', N'Konopelski', 404, N'padberg2747@lehnerschimmelandwilkinson.com', 324, 1, N'cheri.boyle', N'8cb2237d0679ca88db6464eac60da96345513964', '2022-05-16 15:13:11.79328', NULL);
 SET IDENTITY_INSERT staff OFF;
+GO
 SET IDENTITY_INSERT staff ON;
+GO
 INSERT INTO staff (staff_id, first_name, last_name, address_id, email, store_id, active, username, password, last_update, picture) VALUES
 (1000, N'Tarsha', N'Ratke', 432, N'carter1231@borerjacobi.com', 338, 1, N'mariana.quigley', N'8cb2237d0679ca88db6464eac60da96345513964', '2022-05-16 15:13:11.79328', NULL),
 (1001, N'Salina', N'Beier', 421, N'vonrueden5461@streichgroup.com', 357, 1, N'floy.koepp', N'8cb2237d0679ca88db6464eac60da96345513964', '2022-05-16 15:13:11.79328', NULL),
@@ -17641,11 +17669,13 @@ INSERT INTO staff (staff_id, first_name, last_name, address_id, email, store_id,
 (1498, N'Fabian', N'Feest', 36, N'hudson4937@hayesblandaandbashirian.com', 8, 1, N'antone.wyman', N'8cb2237d0679ca88db6464eac60da96345513964', '2022-05-16 15:13:11.79328', NULL),
 (1499, N'Janina', N'Oberbrunner', 31, N'schuster371@hansenandsons.com', 40, 1, N'le.bergstrom', N'8cb2237d0679ca88db6464eac60da96345513964', '2022-05-16 15:13:11.79328', NULL);
 SET IDENTITY_INSERT staff OFF;
+GO
 
 ALTER TABLE rental
 ALTER COLUMN return_date DATETIME NULL;
 
 SET IDENTITY_INSERT rental ON;
+GO
 INSERT INTO rental (rental_id, rental_date, inventory_id, customer_id, return_date, staff_id, last_update) VALUES
 (2, '2022-05-24 22:54:33', 1525, 459, '2022-05-28 19:40:33', 1, '2022-02-16 02:30:53'),
 (3, '2022-05-24 23:03:39', 1711, 408, '2022-06-01 22:12:39', 1, '2022-02-16 02:30:53'),
@@ -33724,8 +33754,10 @@ INSERT INTO rental (rental_id, rental_date, inventory_id, customer_id, return_da
 (16049, '2022-08-23 22:50:12', 2666, 393, '2022-08-30 01:01:12', 2, '2022-02-16 02:30:53'),
 (1, '2022-05-24 22:53:30', 367, 130, '2022-05-26 22:04:30', 1, '2022-02-15 21:30:53');
 SET IDENTITY_INSERT rental OFF;
+GO
 
 SET IDENTITY_INSERT payment_p2022_01 ON;
+GO
 
 INSERT INTO payment_p2022_01 (payment_id, customer_id, staff_id, rental_id, amount, payment_date) VALUES
 (16051, 269, 1, 98, 0.99, '2022-01-29 01:58:52.222594'),
@@ -34453,8 +34485,10 @@ INSERT INTO payment_p2022_01 (payment_id, customer_id, staff_id, rental_id, amou
 (32088, 228, 2, 12672, 3.98, '2022-01-28 09:40:40.098977');
 
 SET IDENTITY_INSERT payment_p2022_01 OFF;
+GO
 
 SET IDENTITY_INSERT payment_p2022_02 ON;
+GO
 INSERT INTO payment_p2022_02 (payment_id, customer_id, staff_id, rental_id, amount, payment_date) VALUES
 (16056, 270, 1, 193, 1.99, '2022-02-03 01:49:30.663659'),
 (16075, 278, 1, 1092, 4.99, '2022-02-14 16:08:09.981165'),
@@ -36862,8 +36896,10 @@ INSERT INTO payment_p2022_02 (payment_id, customer_id, staff_id, rental_id, amou
 (32095, 251, 1, 14107, 0.99, '2022-02-21 06:37:50.192369'),
 (32097, 263, 1, 15293, 0.99, '2022-02-04 21:24:42.669312');
 SET IDENTITY_INSERT payment_p2022_02 OFF;
+GO
 
 SET IDENTITY_INSERT payment_p2022_03 ON;
+GO
 INSERT INTO payment_p2022_03 (payment_id, customer_id, staff_id, rental_id, amount, payment_date) VALUES
 (16053, 269, 2, 703, 0.99, N'2022-03-02 19:51:40.813503'),
 (16058, 271, 1, 1096, 8.99, N'2022-03-19 06:19:47.019162'),
@@ -39581,8 +39617,10 @@ INSERT INTO payment_p2022_03 (payment_id, customer_id, staff_id, rental_id, amou
 (32059, 155, 2, 11496, 7.98, N'2022-03-30 14:00:22.403282'),
 (32078, 208, 1, 13719, 5.98, N'2022-03-30 10:55:29.525615');
 SET IDENTITY_INSERT payment_p2022_03 OFF;
+GO
 
 SET IDENTITY_INSERT payment_p2022_04 ON;
+GO
 
 INSERT INTO payment_p2022_04 (payment_id, customer_id, staff_id, rental_id, amount, payment_date) VALUES
 (16066, 274, 1, 208, 4.99, '2022-04-15 13:28:07'),
@@ -42138,8 +42176,10 @@ INSERT INTO payment_p2022_04 (payment_id, customer_id, staff_id, rental_id, amou
 (32096, 252, 2, 13756, 4.99, '2022-04-11 07:44:09');
 
 SET IDENTITY_INSERT payment_p2022_04 OFF;
+GO
 
 SET IDENTITY_INSERT payment_p2022_05 ON;
+GO
 INSERT INTO payment_p2022_05 (payment_id, customer_id, staff_id, rental_id, amount, payment_date) VALUES
 (16055, 269, 2, 1099, 2.99, N'2022-05-20 16:54:02.174545'),
 (16057, 270, 1, 1040, 4.99, N'2022-05-11 10:27:17.752545'),
@@ -43142,7 +43182,9 @@ INSERT INTO payment_p2022_05 (payment_id, customer_id, staff_id, rental_id, amou
 (22029, 532, 1, 13908, 4.99, N'2022-05-31 14:25:50.301203'),
 (22033, 533, 1, 10380, 2.99, N'2022-05-29 23:25:21.565143');
 SET IDENTITY_INSERT payment_p2022_05 OFF;
+GO
 SET IDENTITY_INSERT payment_p2022_05 ON;
+GO
 INSERT INTO payment_p2022_05 (payment_id, customer_id, staff_id, rental_id, amount, payment_date) VALUES
 (22037, 533, 1, 11918, 2.99, N'2022-05-13 17:16:58.832127'),
 (22045, 534, 1, 10796, 0.99, N'2022-05-12 21:50:59.876255'),
@@ -44145,7 +44187,9 @@ INSERT INTO payment_p2022_05 (payment_id, customer_id, staff_id, rental_id, amou
 (27930, 512, 1, 7507, 0.99, N'2022-05-22 11:46:21.961466'),
 (27932, 512, 2, 8868, 4.99, N'2022-05-13 13:23:22.951384');
 SET IDENTITY_INSERT payment_p2022_05 OFF;
+GO
 SET IDENTITY_INSERT payment_p2022_05 ON;
+GO
 INSERT INTO payment_p2022_05 (payment_id, customer_id, staff_id, rental_id, amount, payment_date) VALUES
 (27938, 513, 1, 5741, 7.99, N'2022-05-01 03:47:39.009254'),
 (27944, 513, 1, 8798, 5.99, N'2022-05-11 15:26:56.841242'),
@@ -44825,9 +44869,11 @@ INSERT INTO payment_p2022_05 (payment_id, customer_id, staff_id, rental_id, amou
 (32091, 234, 1, 15778, 0.99, N'2022-05-22 04:59:09.782763'),
 (32092, 236, 1, 12988, 0.99, N'2022-05-11 08:54:53.730836');
 SET IDENTITY_INSERT payment_p2022_05 OFF;
+GO
 
 -- SQL Server converted INSERT statements for payment_p2022_06
 SET IDENTITY_INSERT payment_p2022_06 ON;
+GO
 
 INSERT INTO payment_p2022_06 (payment_id, customer_id, staff_id, rental_id, amount, payment_date) VALUES
 (16050, 269, 2, 7, 1.99, '2022-06-21 08:41:50.707316'),
@@ -47490,8 +47536,10 @@ INSERT INTO payment_p2022_06 (payment_id, customer_id, staff_id, rental_id, amou
 (32094, 245, 2, 12682, 2.99, '2022-06-20 20:14:56.204986');
 
 SET IDENTITY_INSERT payment_p2022_06 OFF;
+GO
 
 SET IDENTITY_INSERT payment_p2022_07 ON;
+GO
 
 INSERT INTO payment_p2022_07 (payment_id, customer_id, staff_id, rental_id, amount, payment_date) VALUES
 (16061, 272, 1, 1041, 6.99, N'2022-07-19T07:32:02.911937'),

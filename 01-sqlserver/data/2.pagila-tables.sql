@@ -392,3 +392,11 @@ CREATE TABLE staff (
     FOREIGN KEY (address_id) REFERENCES address(address_id),
     FOREIGN KEY (store_id) REFERENCES store(store_id)
 );
+
+ALTER TABLE staff
+ALTER COLUMN picture VARBINARY(MAX) NULL;
+
+ALTER TABLE rental
+ALTER COLUMN return_date DATETIME NULL;
+
+ALTER TABLE film ADD original_language_id INT NULL;
