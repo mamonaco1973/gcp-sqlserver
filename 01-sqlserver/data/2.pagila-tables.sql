@@ -385,8 +385,8 @@ CREATE TABLE staff (
     email NVARCHAR(50),
     store_id INT NOT NULL,
     active BIT NOT NULL DEFAULT 1,
-    username NVARCHAR(16) NOT NULL,
-    password NVARCHAR(40), -- nullable, per original schema
+    username NVARCHAR(64) NOT NULL,
+    password NVARCHAR(64), -- nullable, per original schema
     last_update DATETIME2 NOT NULL DEFAULT CURRENT_TIMESTAMP,
     picture VARBINARY(MAX),
     FOREIGN KEY (address_id) REFERENCES address(address_id),
