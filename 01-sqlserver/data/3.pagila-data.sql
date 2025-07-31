@@ -2686,8 +2686,6 @@ INSERT INTO customer (customer_id, store_id, first_name, last_name, email, addre
 SET IDENTITY_INSERT customer OFF;
 GO
 
-use pagila;
-GO
 
 SET IDENTITY_INSERT language ON;
 GO
@@ -2702,8 +2700,6 @@ INSERT INTO language (language_id, name, last_update) VALUES
 
 SET IDENTITY_INSERT language OFF;
 GO
-
-ALTER TABLE film ADD original_language_id INT NULL;
 
 SET IDENTITY_INSERT film ON;
 GO
