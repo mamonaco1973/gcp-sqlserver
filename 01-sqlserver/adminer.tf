@@ -59,7 +59,7 @@ resource "google_compute_instance" "adminer_vm" {
   # - Forces VM creation to wait for Cloud SQL instance to be ready
   # - Ensures startup script has a valid endpoint to connect to
   # =================================================================================
-  #depends_on = [google_sql_database_instance.mysql] # Wait for MySQL instance to be created
+  depends_on = [google_sql_database_instance.sqlserver]
 }
 
 # =================================================================================
