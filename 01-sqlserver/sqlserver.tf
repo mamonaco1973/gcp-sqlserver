@@ -3,7 +3,7 @@
 # =================================================================================
 resource "google_sql_database_instance" "sqlserver" {
   name             = "sqlserver-instance"
-  database_version = "SQLSERVER_2019_STANDARD"
+  database_version = "SQLSERVER_2022_STANDARD"
   region           = "us-central1"
   root_password    = random_password.sqlserver.result
 
