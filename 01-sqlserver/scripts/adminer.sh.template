@@ -111,7 +111,7 @@ sudo tee /var/www/html/index.html > /dev/null <<EOF
 </html>
 EOF
 
-# Restart Apache to apply changes and ensure Adminer is accessible immediately.
+# Start Apache to apply changes and ensure Adminer is accessible immediately.
 systemctl restart apache2
 
 # Enable Apache service to start automatically on system boot.
