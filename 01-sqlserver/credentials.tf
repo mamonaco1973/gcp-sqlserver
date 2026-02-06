@@ -1,41 +1,58 @@
-# =================================================================================
-# GENERATE RANDOM PASSWORD FOR SQLSERVER USER
-# - Securely generates a 24-character alphanumeric password
-# - Special characters are disabled for better compatibility with scripts, shell, and tooling
-# - Output is used for secure service authentication (not stored in plaintext in code)
-# =================================================================================
+# ================================================================================
+# FILE: credentials.tf
+# ================================================================================
+# PURPOSE:
+#   Generates database credentials and stores them securely in Google Secret
+#   Manager for use by dependent services and virtual machines.
+#
+# NOTES:
+#   - Credentials are never hardcoded in Terraform configuration
+#   - Passwords are generated at deploy time with strong entropy
+#   - Secrets are retrieved at runtime via IAM-controlled access
+# ================================================================================
+
+# ================================================================================
+# GENERATE RANDOM PASSWORD
+# ================================================================================
+# - Creates a strong, 24-character alphanumeric password
+# - Special characters are disabled to avoid shell and tooling issues
+# - Password value is consumed by Secret Manager only
+# ================================================================================
+
 resource "random_password" "sqlserver" {
-  length  = 24    # Strong entropy: 24-character password
-  special = false # Disable special characters to avoid shell/script issues
+  length  = 24
+  special = false
 }
 
-# =================================================================================
-# CREATE SECRET IN GOOGLE SECRET MANAGER
-# - Securely stores the Postgres credentials (username + generated password)
-# - Enables controlled access via IAM policies, instead of hardcoding credentials
-# - Replication is managed by Google (multi-region/high availability by default)
-# =================================================================================
+# ================================================================================
+# SECRET MANAGER: SQL SERVER CREDENTIALS
+# ================================================================================
+# - Defines a logical secret container in Google Secret Manager
+# - Replication is handled automatically by Google
+# - No secret material is stored at this stage
+# ================================================================================
+
 resource "google_secret_manager_secret" "sqlserver_secret" {
-  secret_id = "sqlserver-credentials" # Logical name for this secret
+  secret_id = "sqlserver-credentials"
 
   replication {
-    auto {} # Use default replication policy — ensures global durability and availability
+    auto {}
   }
 }
 
-# =================================================================================
-# ADD SECRET VERSION WITH CREDENTIAL DATA
-# - Binds the actual secret content (JSON) to the secret defined above
-# - Stores the username and securely generated password as a JSON object
-# - Enables service accounts, VMs, or workloads to fetch credentials securely at runtime
-# =================================================================================
+# ================================================================================
+# SECRET VERSION: CREDENTIAL PAYLOAD
+# ================================================================================
+# - Stores the actual credential data as a JSON object
+# - Includes static username and generated password
+# - Enables secure retrieval by authorized workloads at runtime
+# ================================================================================
+
 resource "google_secret_manager_secret_version" "sqlserver_secret_version" {
-  secret = google_secret_manager_secret.sqlserver_secret.id # Target the parent secret
-  secret_data = jsonencode({                                # Encode structured credentials
-    username = "sqlserver"                                  # Static username
-    password = random_password.sqlserver.result             # Dynamic password (from above)
+  secret = google_secret_manager_secret.sqlserver_secret.id
+
+  secret_data = jsonencode({
+    username = "sqlserver"
+    password = random_password.sqlserver.result
   })
 }
-
-
-
