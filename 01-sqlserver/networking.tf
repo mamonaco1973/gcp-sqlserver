@@ -87,7 +87,7 @@ resource "google_compute_firewall" "allow_ssh" {
 # ================================================================================
 
 resource "google_compute_global_address" "private_ip_alloc" {
-  name          = "mysql-private-ip-alloc"
+  name          = "sqlserver-private-ip-alloc"
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 16
