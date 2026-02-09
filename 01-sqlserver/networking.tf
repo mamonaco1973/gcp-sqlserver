@@ -47,7 +47,7 @@ resource "google_compute_subnetwork" "sqlserver_subnet" {
 # ================================================================================
 
 resource "google_compute_firewall" "allow_http" {
-  name    = "allow-http"
+  name    = "sqlserver-allow-http"
   network = google_compute_network.sqlserver_vpc.id
 
   allow {
@@ -56,7 +56,7 @@ resource "google_compute_firewall" "allow_http" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["allow-http"]
+  target_tags   = ["sqlserver-allow-http"]
 }
 
 # ================================================================================
@@ -67,7 +67,7 @@ resource "google_compute_firewall" "allow_http" {
 # ================================================================================
 
 resource "google_compute_firewall" "allow_ssh" {
-  name    = "allow-ssh"
+  name    = "sqlserver-allow-ssh"
   network = google_compute_network.sqlserver_vpc.id
 
   allow {
@@ -76,7 +76,7 @@ resource "google_compute_firewall" "allow_ssh" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["allow-ssh"]
+  target_tags   = ["sqlserver-allow-ssh"]
 }
 
 # ================================================================================

@@ -58,8 +58,8 @@ resource "google_compute_instance" "adminer_vm" {
   # - Tags must align with target_tags in firewall resources
   # ==============================================================================
   tags = [
-    "allow-ssh",
-    "allow-http"
+    "sqlserver-allow-ssh",
+    "sqlserver-allow-http"
   ]
 
   # ==============================================================================
